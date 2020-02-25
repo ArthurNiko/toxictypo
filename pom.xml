@@ -15,6 +15,8 @@
     <description>Web App using the suggest lib</description>
 
     <properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<artifactory>http://artifactory:8081/artifactory</artifactory>
         <java.version>1.8</java.version>
     </properties>
 
@@ -55,5 +57,16 @@
             </plugin>
         </plugins>
     </build>
-
+<distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>libs-release</name>
+        <url>${artifactory}/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>libs-snapshot</name>
+        <url>${artifactory}/libs-snapshot-local</url>
+    </snapshotRepository>    
+</distributionManagement>
 </project>
