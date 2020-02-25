@@ -1,6 +1,6 @@
 FROM python:2.7
 WORKDIR /app
 COPY ./src/test/ .
-RUN pip install -r requirements.txt
+RUN pip install -r requirments.txt
 ENTRYPOINT [ "python" ]
 CMD [ "e2e_tests.py localhost:8080 sanity 10" ]
