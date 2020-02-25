@@ -33,7 +33,6 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'aws-pair', keyFileVariable: 'KEYFILE', passphraseVariable: '', usernameVariable: 'AWSUSER')]) {
                 sh "ssh -i "${KEYFILE}" ${AWSUSER}@ec2-54-93-232-132.eu-central-1.compute.amazonaws.com docker run -p 80:8080 760836743460.dkr.ecr.eu-central-1.amazonaws.com/toxictypo"
                 }
-                }
             }
         }
     }
