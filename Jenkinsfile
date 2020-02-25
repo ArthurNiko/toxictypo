@@ -11,6 +11,7 @@ pipeline {
         }
         stage('Testing'){
             steps {
+                sh "docker rm -f toxic_test_cont || true"
                 sh "docker build -f Dockerfile -t toxic_test ."
                 sh "docker run -d -p 9000:8080 --name toxic_test_cont toxic_test"
                 sh "docker build -f Dockerfile_python -t python_test ."
