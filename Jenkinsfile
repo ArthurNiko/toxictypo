@@ -31,7 +31,7 @@ pipeline {
             }
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'aws-pair', keyFileVariable: 'KEYFILE', passphraseVariable: '', usernameVariable: 'AWSUSER')]) {
-                sh "ssh -i ${KEYFILE} ${AWSUSER}@ec2-35-156-29-121.eu-central-1.compute.amazonaws.com < login_script.sh"
+                sh "ssh -o StrictHostKeyChecking=no -i ${KEYFILE} ${AWSUSER}@ec2-35-156-29-121.eu-central-1.compute.amazonaws.com < login_script.sh"
                 }
             }
         }
