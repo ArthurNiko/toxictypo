@@ -11,12 +11,7 @@ pipeline {
         }
         stage('Testing'){
             steps {
-                sh "docker rm -f toxic_test_cont || true"
-                sh "docker rm -f python_test || true"
-                sh "docker build -f Dockerfile -t toxic_test ."
-                sh "docker run -d -p 9000:8080 --name toxic_test_cont toxic_test"
-                sh "docker build -f Dockerfile_python -t python_test ."
-                sh "docker run -d --name python_test python_test"
+                sh "sh test_script.sh"
             }
         }
         stage('Deploy'){
@@ -31,11 +26,19 @@ pipeline {
             }
         }
         stage('Release'){
+            when {
+                branch 'master'
+            }
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'aws-pair', keyFileVariable: 'KEYFILE', passphraseVariable: '', usernameVariable: 'AWSUSER')]) {
                 sh "ssh -i ${KEYFILE} ${AWSUSER}@ec2-54-93-232-132.eu-central-1.compute.amazonaws.com < login_script.sh"
                 }
             }
+        }
+    }
+    post {
+        unsuccessful {
+            sh "sendmail ${git log -1 | grep Author | cut -f2 -d'<' | cut -f1 -d'>'} < log.txt"
         }
     }
 }
