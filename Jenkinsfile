@@ -38,7 +38,7 @@ pipeline {
     }
     post {
         unsuccessful {
-            sh "sendmail ${git log -1 | grep Author | cut -f2 -d'<' | cut -f1 -d'>'} < log.txt"
+            sh "sendmail $(git log -1 | grep Author | cut -f2 -d'<' | cut -f1 -d'>') < log.txt"
         }
     }
 }
